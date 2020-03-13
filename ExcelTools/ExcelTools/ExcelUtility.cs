@@ -21,30 +21,52 @@ namespace ExcelTools
       /// <param name="filePath"></param>
       /// <param name="sheetName"></param>
       /// <returns></returns>
-        static DataTable GetExcelContent(String filePath, string sheetName)
+       public static DataTable GetExcelContent(String filePath, string sheetName)
         {
             if (sheetName == "_xlnm#_FilterDatabase")
                 return null;
             DataSet dateSet = new DataSet();
-            OleDbConnection connection = null;
             string strExtension = System.IO.Path.GetExtension(filePath);
+            string strConn = "";
             switch (strExtension)
             {
                 case ".xls":
-                    connection = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filePath + ";" + "Extended Properties=\"Excel 8.0;HDR=yes;IMEX=1;\"");
+                    strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filePath + ";" +
+                              "Extended Properties=\"Excel 8.0;HDR=yes;IMEX=1;\"";
                     break;
                 case ".xlsx":
-                    connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";" + "Extended Properties=\"Excel 12.0;HDR=yes;IMEX=1;\"");
+                    strConn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";" +
+                              "Extended Properties=\"Excel 12.0;HDR=yes;IMEX=1;\"";
                     //此连接可以操作.xls与.xlsx文件 (支持Excel2003 和 Excel2007 的连接字符串) 
                     //"HDR=yes;"是说Excel文件的第一行是列名而不是数，"HDR=No;"正好与前面的相反。"IMEX=1 "如果列中的数据类型不一致，使用"IMEX=1"可必免数据类型冲突。 
                     break;
                 default:
-                    connection = null;
                     break;
             }
             String commandString = string.Format("SELECT * FROM [{0}$]", sheetName);
-            connection.Open();
-            using (OleDbCommand command = new OleDbCommand(commandString, connection))
+
+
+            using (OleDbConnection connection = new OleDbConnection(strConn))
+            {
+                connection.Open();
+                using (OleDbDataAdapter myData = new OleDbDataAdapter(commandString, connection))
+                {
+                    myData.Fill(dateSet, sheetName);
+                    DataTable table = dateSet.Tables[sheetName];
+                    for (int i = 0; i < table.Rows[0].ItemArray.Length; i++)
+                    {
+                        var cloumnName = table.Rows[0].ItemArray[i].ToString();
+                        if (!string.IsNullOrEmpty(cloumnName))
+                            table.Columns[i].ColumnName = cloumnName;
+                    }
+                    table.Rows.RemoveAt(0);
+                    return table;
+                }
+            }
+
+
+
+            /*using (OleDbCommand command = new OleDbCommand(commandString, connection))
             {
                 OleDbCommand objCmd = new OleDbCommand(commandString, connection);
                 OleDbDataAdapter myData = new OleDbDataAdapter(commandString, connection);
@@ -59,7 +81,7 @@ namespace ExcelTools
                 table.Rows.RemoveAt(0);
                 connection.Close();
                 return table;
-            }
+            }*/
 
         }
 
@@ -133,6 +155,43 @@ namespace ExcelTools
         {
             List<string> tableNames = GetExcelSheetNames(filePath);
             JObject json = new JObject();
+            for (int i = 0; i < tableNames.Count; i++)
+            {
+                JArray table = new JArray();
+                DataTable dataTable = GetExcelContent(filePath, tableNames[i]);
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    JObject row = new JObject();
+                    foreach (DataColumn column in dataTable.Columns)
+                    {
+                        row.Add(column.ColumnName, dataRow[column.ColumnName].ToString());
+                    }
+                    table.Add(row);
+                }
+                json.Add(tableNames[i], table);
+            }
+            /*tableNames.ForEach(tableName =>
+            {
+                var table = new JArray() as dynamic;
+                DataTable dataTable = GetExcelContent(filePath, tableName);
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    dynamic row = new JObject();
+                    foreach (DataColumn column in dataTable.Columns)
+                    {
+                        row.Add(column.ColumnName, dataRow[column.ColumnName].ToString());
+                    }
+                    table.Add(row);
+                }
+                json.Add(tableName, table);
+            });*/
+            return json;
+        }
+
+        public static JObject ExcelToJsonArray(string filePath)
+        {
+            List<string> tableNames = GetExcelSheetNames(filePath);
+            JObject json = new JObject();
             tableNames.ForEach(tableName =>
             {
                 var table = new JArray() as dynamic;
@@ -150,7 +209,7 @@ namespace ExcelTools
             });
             return json;
         }
-       public static string ConvertJsonString(string str)
+        public static string ConvertJsonString(string str)
         {
             //格式化json字符串
             JsonSerializer serializer = new JsonSerializer();

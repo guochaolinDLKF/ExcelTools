@@ -73,7 +73,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(462, 407);
+            this.button3.Location = new System.Drawing.Point(399, 405);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(121, 38);
             this.button3.TabIndex = 6;
@@ -145,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 550);
+            this.ClientSize = new System.Drawing.Size(906, 531);
             this.Controls.Add(this.tip);
             this.Controls.Add(this.XML);
             this.Controls.Add(this.JSON);
