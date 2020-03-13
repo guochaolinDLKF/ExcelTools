@@ -1,0 +1,56 @@
+{
+    "vip_c_prize": [
+        {
+            "vipLv": "1",
+            "rechargeNum": "10",
+            "vipPrizeDes": "{\"coin\":100000,\"crystal\":500,\"signInPrize\":2,\"weapon\":140009}"
+        },
+        {
+            "vipLv": "2",
+            "rechargeNum": "30",
+            "vipPrizeDes": "{\"coin\":500000,\"crystal\":1000,\"signInPrize\":3,\"weapon\":0}"
+        },
+        {
+            "vipLv": "3",
+            "rechargeNum": "50",
+            "vipPrizeDes": "{\"coin\":1000000,\"crystal\":1500,\"signInPrize\":5,\"weapon\":140010}"
+        },
+        {
+            "vipLv": "4",
+            "rechargeNum": "70",
+            "vipPrizeDes": "{\"coin\":2000000,\"crystal\":2500,\"signInPrize\":7,\"weapon\":0}"
+        },
+        {
+            "vipLv": "5",
+            "rechargeNum": "100",
+            "vipPrizeDes": "{\"coin\":5000000,\"crystal\":5000,\"signInPrize\":10,\"weapon\":140011}"
+        }
+    ],
+    "vip_s_db": [
+        {
+            "vipLv": "1",
+            "rechargeNum": "10",
+            "vipPrizeDes": "{\"coin\":100000,\"crystal\":500,\"signInPrize\":2,\"weapon\":140009}"
+        },
+        {
+            "vipLv": "2",
+            "rechargeNum": "30",
+            "vipPrizeDes": "{\"coin\":500000,\"crystal\":1000,\"signInPrize\":3,\"weapon\":0}"
+        },
+        {
+            "vipLv": "3",
+            "rechargeNum": "50",
+            "vipPrizeDes": "{\"coin\":1000000,\"crystal\":1500,\"signInPrize\":5,\"weapon\":140010}"
+        },
+        {
+            "vipLv": "4",
+            "rechargeNum": "70",
+            "vipPrizeDes": "{\"coin\":2000000,\"crystal\":2500,\"signInPrize\":7,\"weapon\":0}"
+        },
+        {
+            "vipLv": "5",
+            "rechargeNum": "100",
+            "vipPrizeDes": "{\"coin\":5000000,\"crystal\":5000,\"signInPrize\":10,\"weapon\":140011}"
+        }
+    ]
+}
