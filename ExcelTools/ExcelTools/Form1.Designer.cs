@@ -38,7 +38,6 @@
             this.JSON = new System.Windows.Forms.CheckBox();
             this.XML = new System.Windows.Forms.CheckBox();
             this.tip = new System.Windows.Forms.Label();
-            this.Debug = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // button1
@@ -142,21 +141,11 @@
             this.tip.TabIndex = 17;
             this.tip.Text = "请选择要转换的格式";
             // 
-            // Debug
-            // 
-            this.Debug.FormattingEnabled = true;
-            this.Debug.ItemHeight = 12;
-            this.Debug.Location = new System.Drawing.Point(26, 378);
-            this.Debug.Name = "Debug";
-            this.Debug.Size = new System.Drawing.Size(348, 160);
-            this.Debug.TabIndex = 18;
-            // 
             // ExcelTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(906, 550);
-            this.Controls.Add(this.Debug);
             this.Controls.Add(this.tip);
             this.Controls.Add(this.XML);
             this.Controls.Add(this.JSON);
@@ -188,7 +177,6 @@
         private System.Windows.Forms.CheckBox JSON;
         private System.Windows.Forms.CheckBox XML;
         private System.Windows.Forms.Label tip;
-        private System.Windows.Forms.ListBox Debug;
     }
 }
 

@@ -39,9 +39,9 @@ namespace ExcelTools
             if (f.ShowDialog() == DialogResult.OK)
             {
                 String DirPath = f.SelectedPath;
-                
-                this.ExcelPath.Text = DirPath;//G:\新建文件夹
-                
+
+                this.ExcelPath.Text = DirPath + "\\";//G:\新建文件夹
+
                 SearchFileAdd(DirPath);
 
             }
@@ -49,6 +49,7 @@ namespace ExcelTools
 
         void SearchFileAdd(string dirPath)
         {
+            ExcelFileList.Items.Clear();
             DirectoryInfo theFolder = new DirectoryInfo(dirPath);
             FileInfo[] fileInfo = theFolder.GetFiles();
             foreach (FileInfo NextFile in fileInfo) //遍历文件
@@ -71,7 +72,7 @@ namespace ExcelTools
             if (f.ShowDialog() == DialogResult.OK)
             {
                 String DirPath = f.SelectedPath;
-                this.OutPath.Text = DirPath+"\\";//G:\新建文件夹
+                this.OutPath.Text = DirPath + "\\";//G:\新建文件夹
 
             }
         }
@@ -124,14 +125,15 @@ namespace ExcelTools
                 string fileName = Path.GetFileName(ExcelFileList.Items[i].ToString());
 
                 fileName = fileName.Split('.')[0];
-                if (File.Exists(fileName + ".json"))
+                fileName = OutPath.Text + fileName + ".json";
+                if (File.Exists(fileName))
                 {
-                    File.Delete(fileName + ".json");
+                    File.Delete(fileName);
                 }
-                using (FileStream fs = new FileStream(OutPath.Text+fileName + ".json",FileMode.CreateNew,FileAccess.Write))
+                using (FileStream fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
                 {
                     byte[] data = Encoding.UTF8.GetBytes(ExcelUtility.ConvertJsonString(obj.ToString()));
-                    fs.Write(data,0,data.Length);
+                    fs.Write(data, 0, data.Length);
                 }
             }
             MessageBox.Show("转换完成");
