@@ -1,0 +1,17 @@
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\ExcelTools.exe.config
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\ExcelTools.exe
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\ExcelTools.pdb
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\Newtonsoft.Json.dll
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\NPOI.dll
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\NPOI.OOXML.dll
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\NPOI.OpenXml4Net.dll
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\NPOI.OpenXmlFormats.dll
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\bin\Release\Newtonsoft.Json.xml
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.ExcelTools.resources
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.Properties.Resources.resources
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.csproj.GenerateResource.cache
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.csproj.CoreCompileInputs.cache
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.csproj.CopyComplete
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.exe
+D:\workDir\ExcelTools\ExcelTools\ExcelTools\obj\Release\ExcelTools.pdb

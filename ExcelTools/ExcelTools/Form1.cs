@@ -71,7 +71,7 @@ namespace ExcelTools
             if (f.ShowDialog() == DialogResult.OK)
             {
                 String DirPath = f.SelectedPath;
-                this.OutPath.Text = DirPath;//G:\新建文件夹
+                this.OutPath.Text = DirPath+"\\";//G:\新建文件夹
 
             }
         }
