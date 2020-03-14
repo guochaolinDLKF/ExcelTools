@@ -59,7 +59,7 @@ namespace ExcelTools
                         if (!string.IsNullOrEmpty(cloumnName))
                             table.Columns[i].ColumnName = cloumnName;
                     }
-                    table.Rows.RemoveAt(0);
+                    table.Rows.RemoveAt(1);
                     return table;
                 }
             }
@@ -164,27 +164,18 @@ namespace ExcelTools
                     JObject row = new JObject();
                     foreach (DataColumn column in dataTable.Columns)
                     {
+                        if(column.ColumnName== dataRow[column.ColumnName].ToString())continue;
                         row.Add(column.ColumnName, dataRow[column.ColumnName].ToString());
+                    }
+
+                    if (!row.HasValues)
+                    {
+                        continue;
                     }
                     table.Add(row);
                 }
                 json.Add(tableNames[i], table);
             }
-            /*tableNames.ForEach(tableName =>
-            {
-                var table = new JArray() as dynamic;
-                DataTable dataTable = GetExcelContent(filePath, tableName);
-                foreach (DataRow dataRow in dataTable.Rows)
-                {
-                    dynamic row = new JObject();
-                    foreach (DataColumn column in dataTable.Columns)
-                    {
-                        row.Add(column.ColumnName, dataRow[column.ColumnName].ToString());
-                    }
-                    table.Add(row);
-                }
-                json.Add(tableName, table);
-            });*/
             return json;
         }
 

@@ -41,3 +41,4 @@ D:\ExcelTools\ExcelTools\ExcelTools\obj\Debug\ExcelTools.csproj.CoreCompileInput
 D:\ExcelTools\ExcelTools\ExcelTools\obj\Debug\ExcelTools.csproj.CopyComplete
 D:\ExcelTools\ExcelTools\ExcelTools\obj\Debug\ExcelTools.exe
 D:\ExcelTools\ExcelTools\ExcelTools\obj\Debug\ExcelTools.pdb
+D:\ExcelTools\ExcelTools\ExcelTools\obj\Debug\ExcelTools.csprojAssemblyReference.cache
