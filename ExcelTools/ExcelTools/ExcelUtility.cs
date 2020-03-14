@@ -59,29 +59,9 @@ namespace ExcelTools
                         if (!string.IsNullOrEmpty(cloumnName))
                             table.Columns[i].ColumnName = cloumnName;
                     }
-                    table.Rows.RemoveAt(1);
                     return table;
                 }
             }
-
-
-
-            /*using (OleDbCommand command = new OleDbCommand(commandString, connection))
-            {
-                OleDbCommand objCmd = new OleDbCommand(commandString, connection);
-                OleDbDataAdapter myData = new OleDbDataAdapter(commandString, connection);
-                myData.Fill(dateSet, sheetName);
-                DataTable table = dateSet.Tables[sheetName];
-                for (int i = 0; i < table.Rows[0].ItemArray.Length; i++)
-                {
-                    var cloumnName = table.Rows[0].ItemArray[i].ToString();
-                    if (!string.IsNullOrEmpty(cloumnName))
-                        table.Columns[i].ColumnName = cloumnName;
-                }
-                table.Rows.RemoveAt(0);
-                connection.Close();
-                return table;
-            }*/
 
         }
 
@@ -151,30 +131,57 @@ namespace ExcelTools
         /// excel转换为json
         /// </summary>
         /// <param name="filePath"></param>
-        public static JObject ExcelToJson(string filePath)
+        public static JObject ExcelToJson(string filePath,Action<string> call)
         {
             List<string> tableNames = GetExcelSheetNames(filePath);
             JObject json = new JObject();
-            for (int i = 0; i < tableNames.Count; i++)
+            for (int h = 0; h < tableNames.Count; h++)
             {
                 JArray table = new JArray();
-                DataTable dataTable = GetExcelContent(filePath, tableNames[i]);
-                foreach (DataRow dataRow in dataTable.Rows)
+                DataTable dataTable = GetExcelContent(filePath, tableNames[h]);
+                for (int i = 0; i < dataTable.Rows.Count; i++)
                 {
                     JObject row = new JObject();
-                    foreach (DataColumn column in dataTable.Columns)
+                    for (int j = 0; j < dataTable.Columns.Count; j++)
                     {
-                        if(column.ColumnName== dataRow[column.ColumnName].ToString())continue;
-                        row.Add(column.ColumnName, dataRow[column.ColumnName].ToString());
-                    }
+                        if (dataTable.Columns[j].ColumnName ==
+                            dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString())
+                        {
+                            continue;
+                        }
+                        if (i == 1) continue;
+                        int index = -1;
+                        double doub = 0.0f;
+                        string typeStr = dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString().ToLower();
+                        if(typeStr=="")continue;
+                        switch (typeStr)
+                        {
+                            case "int":
+                                index = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToInt();
+                                if (index != -1)
+                                    row.Add(dataTable.Columns[j].ColumnName, index);
+                                break;
+                            case "string":
+                                row.Add(dataTable.Columns[j].ColumnName, dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString());
+                                break;
+                            case "double":
+                                doub = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToDouble();
+                                if (doub != 0.0f)
+                                    row.Add(dataTable.Columns[j].ColumnName, doub);
+                                break;
+                            default:
+                                call(string.Format("表格：{0}遇到无法转换的类型：{1}", tableNames[h], dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString()));
+                                return new JObject();
+                        }
 
+                    }
                     if (!row.HasValues)
                     {
                         continue;
                     }
                     table.Add(row);
                 }
-                json.Add(tableNames[i], table);
+                json.Add(tableNames[h], table);
             }
             return json;
         }

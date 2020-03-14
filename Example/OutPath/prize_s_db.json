@@ -1,73 +1,73 @@
 {
     "prize_c_db": [
         {
-            "prizeId": "1",
+            "prizeId": 1,
             "prizeType": "coin",
-            "prizeMinVlaue": "0",
-            "prizeMaxVlaue": "100",
+            "prizeMinVlaue": 0,
+            "prizeMaxVlaue": 100,
             "iconPath": "icon_sale_coin_1"
         },
         {
-            "prizeId": "2",
+            "prizeId": 2,
             "prizeType": "coin",
-            "prizeMinVlaue": "100",
-            "prizeMaxVlaue": "1000",
+            "prizeMinVlaue": 100,
+            "prizeMaxVlaue": 1000,
             "iconPath": "icon_sale_coin_2"
         },
         {
-            "prizeId": "3",
+            "prizeId": 3,
             "prizeType": "coin",
-            "prizeMinVlaue": "1000",
-            "prizeMaxVlaue": "10000",
+            "prizeMinVlaue": 1000,
+            "prizeMaxVlaue": 10000,
             "iconPath": "icon_sale_coin_3"
         },
         {
-            "prizeId": "4",
+            "prizeId": 4,
             "prizeType": "coin",
-            "prizeMinVlaue": "10000",
-            "prizeMaxVlaue": "100000",
+            "prizeMinVlaue": 10000,
+            "prizeMaxVlaue": 100000,
             "iconPath": "icon_sale_coin_4"
         },
         {
-            "prizeId": "5",
+            "prizeId": 5,
             "prizeType": "coin",
-            "prizeMinVlaue": "100000",
-            "prizeMaxVlaue": "1000000",
+            "prizeMinVlaue": 100000,
+            "prizeMaxVlaue": 1000000,
             "iconPath": "icon_sale_coin_5"
         },
         {
-            "prizeId": "6",
+            "prizeId": 6,
             "prizeType": "crystal",
-            "prizeMinVlaue": "1",
-            "prizeMaxVlaue": "50",
+            "prizeMinVlaue": 1,
+            "prizeMaxVlaue": 50,
             "iconPath": "icon_sale_crystal_1"
         },
         {
-            "prizeId": "7",
+            "prizeId": 7,
             "prizeType": "crystal",
-            "prizeMinVlaue": "50",
-            "prizeMaxVlaue": "100",
+            "prizeMinVlaue": 50,
+            "prizeMaxVlaue": 100,
             "iconPath": "icon_sale_crystal_2"
         },
         {
-            "prizeId": "8",
+            "prizeId": 8,
             "prizeType": "crystal",
-            "prizeMinVlaue": "100",
-            "prizeMaxVlaue": "500",
+            "prizeMinVlaue": 100,
+            "prizeMaxVlaue": 500,
             "iconPath": "icon_sale_crystal_3"
         },
         {
-            "prizeId": "9",
+            "prizeId": 9,
             "prizeType": "crystal",
-            "prizeMinVlaue": "500",
-            "prizeMaxVlaue": "1000",
+            "prizeMinVlaue": 500,
+            "prizeMaxVlaue": 1000,
             "iconPath": "icon_sale_crystal_4"
         },
         {
-            "prizeId": "10",
+            "prizeId": 10,
             "prizeType": "crystal",
-            "prizeMinVlaue": "1000",
-            "prizeMaxVlaue": "10000",
+            "prizeMinVlaue": 1000,
+            "prizeMaxVlaue": 10000,
             "iconPath": "icon_sale_crystal_5"
         }
     ]

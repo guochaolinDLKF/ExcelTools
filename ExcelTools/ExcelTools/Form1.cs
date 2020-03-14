@@ -121,9 +121,9 @@ namespace ExcelTools
             }
             for (int i = 0; i < ExcelFileList.Items.Count; i++)
             {
-                //Debug.Items.Add(ExcelFileList.Items[i].ToString());
-                JObject obj = ExcelUtility.ExcelToJson(ExcelFileList.Items[i].ToString());
-                //Debug.Items.Add(obj.ToString());
+                JObject obj = ExcelUtility.ExcelToJson(ExcelFileList.Items[i].ToString(), ToError);
+                //如果没有值，则不做操作
+                if (!obj.HasValues) return;
                 string fileName = Path.GetFileName(ExcelFileList.Items[i].ToString());
 
                 fileName = fileName.Split('.')[0];
@@ -132,11 +132,9 @@ namespace ExcelTools
                 {
                     File.Delete(fileName);
                 }
-               // Debug.Items.Add("要创建的文件："+ fileName);
                 using (FileStream fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
                 {
                     string js = ExcelUtility.ConvertJsonString(obj.ToString());
-                    //Debug.Items.Add(js);
                     byte[] data = Encoding.UTF8.GetBytes(js);
                     fs.Write(data, 0, data.Length);
                 }
@@ -144,6 +142,10 @@ namespace ExcelTools
             MessageBox.Show("转换完成");
         }
 
+        void ToError(string error)
+        {
+            Debug.Items.Add(error);
+        }
         /// <summary>
         /// 选择Excel
         /// </summary>

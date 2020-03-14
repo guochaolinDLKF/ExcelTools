@@ -9,34 +9,26 @@ using System.Text;
 
 namespace ExcelTools
 {
-   public class JsonUtils
+   public static class JsonUtils
     {
-        /// <summary>
-        /// DataTable转Json
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static string DataTableToJson(DataTable dtb)
+        public static int ToInt(this string str)
         {
-            string JsonString = string.Empty;
-            if (dtb.Rows.Count > 0)
+            int index = -1;
+            if (int.TryParse(str, out index))
             {
-                ArrayList dic = new ArrayList();
-                foreach (DataRow row in dtb.Rows)
-                {
-                    Dictionary<string, object> drow = new Dictionary<string, object>();
-                    foreach (DataColumn col in dtb.Columns)
-                    {
-                        drow.Add(col.ColumnName, row[col.ColumnName]);
-                    }
-                    dic.Add(drow);
-                }
-
-                JsonString = JsonConvert.SerializeObject(dic);
-                return ConvertJsonString(JsonString);
+                return index;
             }
+            return index;
+        }
 
-            return JsonString;
+        public static double ToDouble(this string str)
+        {
+            double res = 0.0f;
+            if (double.TryParse(str, out res))
+            {
+                return res;
+            }
+            return res;
         }
         static string ConvertJsonString(string str)
         {

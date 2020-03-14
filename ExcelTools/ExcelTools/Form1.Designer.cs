@@ -38,6 +38,8 @@
             this.JSON = new System.Windows.Forms.CheckBox();
             this.XML = new System.Windows.Forms.CheckBox();
             this.tip = new System.Windows.Forms.Label();
+            this.Debug = new System.Windows.Forms.ListBox();
+            this.errorLog = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -73,9 +75,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(399, 405);
+            this.button3.Location = new System.Drawing.Point(657, 383);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(121, 38);
+            this.button3.Size = new System.Drawing.Size(121, 101);
             this.button3.TabIndex = 6;
             this.button3.Text = "一键转换";
             this.button3.UseVisualStyleBackColor = true;
@@ -141,11 +143,31 @@
             this.tip.TabIndex = 17;
             this.tip.Text = "请选择要转换的格式";
             // 
+            // Debug
+            // 
+            this.Debug.FormattingEnabled = true;
+            this.Debug.ItemHeight = 12;
+            this.Debug.Location = new System.Drawing.Point(55, 374);
+            this.Debug.Name = "Debug";
+            this.Debug.Size = new System.Drawing.Size(441, 136);
+            this.Debug.TabIndex = 18;
+            // 
+            // errorLog
+            // 
+            this.errorLog.AutoSize = true;
+            this.errorLog.Location = new System.Drawing.Point(55, 356);
+            this.errorLog.Name = "errorLog";
+            this.errorLog.Size = new System.Drawing.Size(53, 12);
+            this.errorLog.TabIndex = 19;
+            this.errorLog.Text = "错误日志";
+            // 
             // ExcelTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(906, 531);
+            this.Controls.Add(this.errorLog);
+            this.Controls.Add(this.Debug);
             this.Controls.Add(this.tip);
             this.Controls.Add(this.XML);
             this.Controls.Add(this.JSON);
@@ -177,6 +199,8 @@
         private System.Windows.Forms.CheckBox JSON;
         private System.Windows.Forms.CheckBox XML;
         private System.Windows.Forms.Label tip;
+        private System.Windows.Forms.ListBox Debug;
+        private System.Windows.Forms.Label errorLog;
     }
 }
 
