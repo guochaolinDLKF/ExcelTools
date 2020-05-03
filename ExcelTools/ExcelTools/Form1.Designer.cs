@@ -40,6 +40,8 @@
             this.tip = new System.Windows.Forms.Label();
             this.Debug = new System.Windows.Forms.ListBox();
             this.errorLog = new System.Windows.Forms.Label();
+            this.single = new System.Windows.Forms.CheckBox();
+            this.mutile = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -161,11 +163,37 @@
             this.errorLog.TabIndex = 19;
             this.errorLog.Text = "错误日志";
             // 
+            // single
+            // 
+            this.single.AutoSize = true;
+            this.single.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.single.Location = new System.Drawing.Point(105, 246);
+            this.single.Name = "single";
+            this.single.Size = new System.Drawing.Size(75, 18);
+            this.single.TabIndex = 20;
+            this.single.Text = "单Sheet";
+            this.single.UseVisualStyleBackColor = true;
+            this.single.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // mutile
+            // 
+            this.mutile.AutoSize = true;
+            this.mutile.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.mutile.Location = new System.Drawing.Point(208, 246);
+            this.mutile.Name = "mutile";
+            this.mutile.Size = new System.Drawing.Size(75, 18);
+            this.mutile.TabIndex = 21;
+            this.mutile.Text = "双Sheet";
+            this.mutile.UseVisualStyleBackColor = true;
+            this.mutile.CheckedChanged += new System.EventHandler(this.mutile_CheckedChanged);
+            // 
             // ExcelTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(906, 531);
+            this.Controls.Add(this.mutile);
+            this.Controls.Add(this.single);
             this.Controls.Add(this.errorLog);
             this.Controls.Add(this.Debug);
             this.Controls.Add(this.tip);
@@ -201,6 +229,8 @@
         private System.Windows.Forms.Label tip;
         private System.Windows.Forms.ListBox Debug;
         private System.Windows.Forms.Label errorLog;
+        private System.Windows.Forms.CheckBox single;
+        private System.Windows.Forms.CheckBox mutile;
     }
 }
 

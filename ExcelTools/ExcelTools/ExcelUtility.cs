@@ -21,7 +21,7 @@ namespace ExcelTools
       /// <param name="filePath"></param>
       /// <param name="sheetName"></param>
       /// <returns></returns>
-       public static DataTable GetExcelContent(String filePath, string sheetName)
+        public static DataTable GetExcelContent(String filePath, string sheetName)
         {
             if (sheetName == "_xlnm#_FilterDatabase")
                 return null;
@@ -127,11 +127,67 @@ namespace ExcelTools
             }
         }
 
+        public static JArray ExcelSingleSheetToJson(string filePath, Action<string> call)
+        {
+            List<string> tableNames = GetExcelSheetNames(filePath);
+            //JObject json = new JObject();
+            JArray table = new JArray();
+            //JObject table = new JObject();
+            //for (int h = 0; h < tableNames.Count; h++)
+            //{
+
+            DataTable dataTable = GetExcelContent(filePath, tableNames[0]);
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                JObject row = new JObject();
+                for (int j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    if (dataTable.Columns[j].ColumnName ==
+                        dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString())
+                    {
+                        continue;
+                    }
+                    if (i == 1) continue;
+                    int index = -1;
+                    double doub = 0.0f;
+                    string typeStr = dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString().ToLower();
+                    if (typeStr == "") continue;
+                    switch (typeStr)
+                    {
+                        case "int":
+                            index = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToInt();
+                            if (index != -1)
+                                row.Add(dataTable.Columns[j].ColumnName, index);
+                            break;
+                        case "string":
+                            row.Add(dataTable.Columns[j].ColumnName, dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString());
+                            break;
+                        case "double":
+                            doub = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToDouble();
+                            if (doub != 0.0f)
+                                row.Add(dataTable.Columns[j].ColumnName, doub);
+                            break;
+                        default:
+                            call(string.Format("表格：{0}遇到无法转换的类型：{1}", tableNames[0], dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString()));
+                            return new JArray();
+                    }
+
+                }
+                if (!row.HasValues)
+                {
+                    continue;
+                }
+                table.Add(row);
+            }
+            //json.Add(tableNames[h], table);
+            // }
+            return table;
+        }
         /// <summary>
         /// excel转换为json
         /// </summary>
         /// <param name="filePath"></param>
-        public static JObject ExcelToJson(string filePath,Action<string> call)
+        public static JObject ExcelMutileSheetToJson(string filePath, Action<string> call)
         {
             List<string> tableNames = GetExcelSheetNames(filePath);
             JObject json = new JObject();
@@ -153,7 +209,7 @@ namespace ExcelTools
                         int index = -1;
                         double doub = 0.0f;
                         string typeStr = dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString().ToLower();
-                        if(typeStr=="")continue;
+                        if (typeStr == "") continue;
                         switch (typeStr)
                         {
                             case "int":

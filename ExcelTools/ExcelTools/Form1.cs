@@ -13,11 +13,19 @@ using Newtonsoft.Json.Linq;
 
 namespace ExcelTools
 {
+    public enum OutSheetNum
+    {
+        Single,
+        Mutile
+    }
     public partial class ExcelTools : Form
     {
+        private OutSheetNum m_outSheetNum;
         public ExcelTools()
         {
             InitializeComponent();
+            m_outSheetNum = OutSheetNum.Single;
+            single.Checked = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -103,7 +111,7 @@ namespace ExcelTools
             }
             else if (XML.Checked)//转为XML
             {
-
+                Debug.Items.Add("此功能尚未开启");
             }
         }
 
@@ -121,9 +129,22 @@ namespace ExcelTools
             }
             for (int i = 0; i < ExcelFileList.Items.Count; i++)
             {
-                JObject obj = ExcelUtility.ExcelToJson(ExcelFileList.Items[i].ToString(), ToError);
-                //如果没有值，则不做操作
-                if (!obj.HasValues) return;
+                JObject obj =new JObject();
+                JArray arr=new JArray();
+                if (m_outSheetNum == OutSheetNum.Single)
+                {
+                    arr = ExcelUtility.ExcelSingleSheetToJson(ExcelFileList.Items[i].ToString(), ToError);
+                    //如果没有值，则不做操作
+                    if (!arr.HasValues) return;
+                }
+                else
+                {
+                    obj = ExcelUtility.ExcelMutileSheetToJson(ExcelFileList.Items[i].ToString(), ToError);
+                    //如果没有值，则不做操作
+                    if (!obj.HasValues) return;
+                }
+               
+                
                 string fileName = Path.GetFileName(ExcelFileList.Items[i].ToString());
 
                 fileName = fileName.Split('.')[0];
@@ -134,7 +155,17 @@ namespace ExcelTools
                 }
                 using (FileStream fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
                 {
-                    string js = ExcelUtility.ConvertJsonString(obj.ToString());
+                    string js = "";
+                    if (m_outSheetNum == OutSheetNum.Single)
+                    {
+                        js = ExcelUtility.ConvertJsonString(arr.ToString());
+                    }
+                    else
+                    {
+                        js = ExcelUtility.ConvertJsonString(obj.ToString());
+                    }
+
+                    if (js.Equals("")) return;
                     byte[] data = Encoding.UTF8.GetBytes(js);
                     fs.Write(data, 0, data.Length);
                 }
@@ -167,6 +198,7 @@ namespace ExcelTools
             if (JSON.Checked)
             {
                 XML.Checked = false;
+                Debug.Items.Clear();
             }
 
         }
@@ -176,12 +208,31 @@ namespace ExcelTools
             if (XML.Checked)
             {
                 JSON.Checked = false;
+                Debug.Items.Clear();
             }
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (single.Checked)
+            {
+                mutile.Checked = false;
+                m_outSheetNum = OutSheetNum.Single;
+            }
+        }
+
+        private void mutile_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mutile.Checked)
+            {
+                single.Checked = false;
+                m_outSheetNum = OutSheetNum.Mutile;
+            }
         }
     }
 }
