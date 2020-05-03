@@ -12,5 +12,72 @@ string
 double 
 仅有三种类型（不区分大小写，笔者已经在源码中将所有类型转为小写）
 输出后为
+单Sheet模式
+[
+    {
+        "fishId": 3001,
+        "fishName": "小丑鱼",
+        "hp": 50,
+        "maxSpeed": 18,
+        "exp": 50,
+        "waitTime": 0.7,
+        "unlockLv": 1,
+        "maxNum": 20
+    },
+    {
+        "fishId": 3002,
+        "fishName": "小蓝鱼",
+        "hp": 50,
+        "maxSpeed": 18,
+        "exp": 50,
+        "waitTime": 0.8,
+        "unlockLv": 1,
+        "maxNum": 20
+    },
+    {
+        "fishId": 3003,
+        "fishName": "小青鱼",
+        "hp": 75,
+        "maxSpeed": 18,
+        "exp": 75,
+        "waitTime": 0.4,
+        "unlockLv": 1,
+        "maxNum": 15
+    }
+]
 多Sheet模式
+{
+    "fish_s_db": [
+        {
+            "fishId": 3001,
+            "fishName": "小丑鱼",
+            "hp": 50,
+            "maxSpeed": 18,
+            "exp": 50,
+            "waitTime": 0.7,
+            "unlockLv": 1,
+            "maxNum": 20
+        },
+        {
+            "fishId": 3002,
+            "fishName": "小蓝鱼",
+            "hp": 50,
+            "maxSpeed": 18,
+            "exp": 50,
+            "waitTime": 0.8,
+            "unlockLv": 1,
+            "maxNum": 20
+        },
+        {
+            "fishId": 3003,
+            "fishName": "小青鱼",
+            "hp": 75,
+            "maxSpeed": 18,
+            "exp": 75,
+            "waitTime": 0.4,
+            "unlockLv": 1,
+            "maxNum": 15
+        }
+    ]
+}
 
