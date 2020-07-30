@@ -20,7 +20,36 @@ namespace ExcelTools
             }
             return index;
         }
-
+        public static Int64 ToInt64(this string str)
+        {
+            Int64 index = -1;
+            if (Int64.TryParse(str, out index))
+            {
+                return index;
+            }
+            return index;
+        }
+       
+        public static float ToFloat(this string str)
+        {
+            float res = 0.0f;
+            if (float.TryParse(str, out res))
+            {
+                return res;
+            }
+            return res;
+        }
+        public static bool ToBool(this string str ,out int errcode)
+        { 
+            bool res =false;
+            errcode = 0;
+            if (bool.TryParse(str, out res))
+            {
+                return res;
+            }
+            errcode = 1;
+            return res;
+        }
         public static double ToDouble(this string str)
         {
             double res = 0.0f;

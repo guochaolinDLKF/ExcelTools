@@ -35,7 +35,7 @@
         "hp": 75,
         "maxSpeed": 18,
         "exp": 75,
-        "waitTime": 0.6,
+        "waitTime": 1.2,
         "unlockLv": 1,
         "maxNum": 15
     },
@@ -75,7 +75,7 @@
         "hp": 150,
         "maxSpeed": 15,
         "exp": 150,
-        "waitTime": 1.5,
+        "waitTime": 1.0,
         "unlockLv": 10,
         "maxNum": 7
     },

@@ -20,19 +20,17 @@ namespace ExcelTools
     }
     public partial class ExcelTools : Form
     {
-        private OutSheetNum m_outSheetNum;
+
         public ExcelTools()
         {
+
             InitializeComponent();
-            m_outSheetNum = OutSheetNum.Single;
-            single.Checked = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             ExcelPath.Text = "ExcelPath/";
             OutPath.Text = "OutPath/";
-            JSON.Checked = true;
         }
         /// <summary>
         /// 选择excel路径
@@ -41,21 +39,33 @@ namespace ExcelTools
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog f = new FolderBrowserDialog();
-            f.Description = "选择Excel存放目录";
-            f.RootFolder = Environment.SpecialFolder.Desktop;
-            if (f.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog fb = new FolderBrowserDialog();
+            fb.RootFolder = Environment.SpecialFolder.MyComputer;
+            fb.Description = "选择Excel存放目录";
+            if (fb.ShowDialog() == DialogResult.OK)
             {
-                String DirPath = f.SelectedPath;
+                String DirPath = fb.SelectedPath;
 
                 this.ExcelPath.Text = DirPath + "\\";//G:\新建文件夹
 
-                SearchFileAdd(DirPath);
+                SearchExcelFileAdd(DirPath);
 
             }
+        } 
+        void SearchJsonFileAdd(string dirPath)
+        {
+            JsonFileList.Items.Clear();
+            DirectoryInfo theFolder = new DirectoryInfo(dirPath);
+            FileInfo[] fileInfo = theFolder.GetFiles();
+            foreach (FileInfo NextFile in fileInfo) //遍历文件
+            {
+                if (NextFile.Extension.Equals(".json"))
+                {
+                    JsonFileList.Items.Add(OutPath.Text + NextFile.Name);
+                }
+            }
         }
-
-        void SearchFileAdd(string dirPath)
+        void SearchExcelFileAdd(string dirPath)
         {
             ExcelFileList.Items.Clear();
             DirectoryInfo theFolder = new DirectoryInfo(dirPath);
@@ -65,7 +75,8 @@ namespace ExcelTools
                 if (NextFile.Extension.Equals(".xls") ||
                     NextFile.Extension.Equals(".xlsx"))
                 {
-                    ExcelFileList.Items.Add("ExcelPath/" + NextFile.Name);
+                    string path = dirPath.Replace("\\", "/");
+                    ExcelFileList.Items.Add(path +"/"+ NextFile.Name);
                 }
             }
         }
@@ -77,25 +88,41 @@ namespace ExcelTools
         private void button2_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog f = new FolderBrowserDialog();
+            f.RootFolder = Environment.SpecialFolder.MyComputer;
+            f.Description = "选择Json文件存放目录";
             if (f.ShowDialog() == DialogResult.OK)
             {
                 String DirPath = f.SelectedPath;
                 this.OutPath.Text = DirPath + "\\";//G:\新建文件夹
-
+                
             }
         }
         /// <summary>
-        /// 一键转换
+        /// 一键转换C#
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Debug.Items.Clear();
+            if (OutPath.Text == "")
+            {
+                MessageBox.Show("请选择输出目录");
+            }
+            if (ExcelPath.Text == "")
+            {
+                MessageBox.Show("请选择Excel目录");
+            }
+            MessageBox.Show("功能未开发");
+        }
+        /// <summary>
+        /// 一键转换Json
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
-            if (!JSON.Checked && !XML.Checked)
-            {
-                MessageBox.Show("请至少选择一项转换");
-            }
-
+            Debug.Items.Clear();
             if (OutPath.Text == "")
             {
                 MessageBox.Show("请选择输出目录");
@@ -105,47 +132,28 @@ namespace ExcelTools
                 MessageBox.Show("请选择Excel目录");
             }
             //转为json
-            if (JSON.Checked)
-            {
-                ExcelToJSON();
-            }
-            else if (XML.Checked)//转为XML
-            {
-                Debug.Items.Add("此功能尚未开启");
-            }
+            ExcelToJSON();
         }
 
         void ExcelToJSON()
         {
-            //如果不存在导出目录，则创建
+            //如果存在导出目录，则创建
             if (!Directory.Exists(OutPath.Text))
             {
                 Directory.CreateDirectory(OutPath.Text);
             }
-
             if (ExcelFileList.Items.Count <= 0)
             {
-                SearchFileAdd("ExcelPath/");
+                SearchExcelFileAdd("ExcelPath");
             }
             for (int i = 0; i < ExcelFileList.Items.Count; i++)
             {
-                JObject obj =new JObject();
-                JArray arr=new JArray();
-                if (m_outSheetNum == OutSheetNum.Single)
-                {
-                    arr = ExcelUtility.ExcelSingleSheetToJson(ExcelFileList.Items[i].ToString(), ToError);
-                    //如果没有值，则不做操作
-                    if (!arr.HasValues) return;
-                }
-                else
-                {
-                    obj = ExcelUtility.ExcelMutileSheetToJson(ExcelFileList.Items[i].ToString(), ToError);
-                    //如果没有值，则不做操作
-                    if (!obj.HasValues) return;
-                }
-               
-                
-                string fileName = Path.GetFileName(ExcelFileList.Items[i].ToString());
+                JArray arr = new JArray();
+                arr = ExcelUtility.ExcelSingleSheetToJson(ExcelFileList.Items[i].ToString().Replace("\\", "/"), ToError);
+                //如果没有值，则不做操作
+                if (!arr.HasValues) return;
+
+                string fileName = Path.GetFileName( ExcelFileList.Items[i].ToString());
 
                 fileName = fileName.Split('.')[0];
                 fileName = OutPath.Text + fileName + ".json";
@@ -155,21 +163,14 @@ namespace ExcelTools
                 }
                 using (FileStream fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
                 {
-                    string js = "";
-                    if (m_outSheetNum == OutSheetNum.Single)
-                    {
-                        js = ExcelUtility.ConvertJsonString(arr.ToString());
-                    }
-                    else
-                    {
-                        js = ExcelUtility.ConvertJsonString(obj.ToString());
-                    }
+                    string js = ExcelUtility.ConvertJsonString(arr.ToString());
 
                     if (js.Equals("")) return;
                     byte[] data = Encoding.UTF8.GetBytes(js);
                     fs.Write(data, 0, data.Length);
                 }
             }
+            SearchJsonFileAdd(OutPath.Text);
             MessageBox.Show("转换完成");
         }
 
@@ -193,46 +194,36 @@ namespace ExcelTools
 
         }
 
-        private void JSON_CheckedChanged(object sender, EventArgs e)
-        {
-            if (JSON.Checked)
-            {
-                XML.Checked = false;
-                Debug.Items.Clear();
-            }
 
-        }
 
-        private void checkBox2_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (XML.Checked)
-            {
-                JSON.Checked = false;
-                Debug.Items.Clear();
-            }
-        }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (single.Checked)
-            {
-                mutile.Checked = false;
-                m_outSheetNum = OutSheetNum.Single;
-            }
+
         }
 
-        private void mutile_CheckedChanged(object sender, EventArgs e)
+        private void JsonFileList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (mutile.Checked)
-            {
-                single.Checked = false;
-                m_outSheetNum = OutSheetNum.Mutile;
-            }
+
         }
+
+        private void Debug_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CSharpFileList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

@@ -149,23 +149,56 @@ namespace ExcelTools
                     }
                     if (i == 1) continue;
                     int index = -1;
+                    float flo = 0.0f;
                     double doub = 0.0f;
+                    bool boolStr = false;
                     string typeStr = dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString().ToLower();
                     if (typeStr == "") continue;
+                    if(dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString()=="")continue;
                     switch (typeStr)
                     {
                         case "int":
                             index = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToInt();
                             if (index != -1)
                                 row.Add(dataTable.Columns[j].ColumnName, index);
+                            else
+                            {
+                                call(string.Format("表格：{0}中int类型转换失败，请检查第{1}行第{2}列数据", tableNames[0], i+2, j));
+                                return new JArray();
+                            }
                             break;
                         case "string":
                             row.Add(dataTable.Columns[j].ColumnName, dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString());
+                            break;
+                        case "float":
+                            flo = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToFloat();
+                            if (flo != 0.0f)
+                                row.Add(dataTable.Columns[j].ColumnName, flo);
+                            else
+                            {
+                                call(string.Format("表格：{0}中float类型转换失败，请检查第{1}行第{2}列数据", tableNames[0], i + 2, j));
+                                return new JArray();
+                            }
                             break;
                         case "double":
                             doub = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToDouble();
                             if (doub != 0.0f)
                                 row.Add(dataTable.Columns[j].ColumnName, doub);
+                            else
+                            {
+                                call(string.Format("表格：{0}中double类型转换失败，请检查第{1}行第{2}列数据", tableNames[0], i + 2, j));
+                                return new JArray();
+                            }
+                            break;
+                        case "bool":
+                            int boolRes = 0;
+                            boolStr = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToBool(out boolRes);
+                            if (boolRes == 1)
+                            {
+                                call(string.Format("表格：{0}中bool类型转换失败，请检查第{1}行第{2}列数据", tableNames[0],i + 2, j));
+                                return new JArray();
+                            }
+                            row.Add(dataTable.Columns[j].ColumnName, boolStr);
                             break;
                         default:
                             call(string.Format("表格：{0}遇到无法转换的类型：{1}", tableNames[0], dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString()));
