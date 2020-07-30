@@ -171,7 +171,7 @@ namespace ExcelTools
                             row.Add(dataTable.Columns[j].ColumnName, dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString());
                             break;
                         case "float":
-                            flo = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToFloat();
+                            flo = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToLower().ToFloat();
                             if (flo != 0.0f)
                                 row.Add(dataTable.Columns[j].ColumnName, flo);
                             else
@@ -189,16 +189,6 @@ namespace ExcelTools
                                 call(string.Format("表格：{0}中double类型转换失败，请检查第{1}行第{2}列数据", tableNames[0], i + 2, j));
                                 return new JArray();
                             }
-                            break;
-                        case "bool":
-                            int boolRes = 0;
-                            boolStr = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToBool(out boolRes);
-                            if (boolRes == 1)
-                            {
-                                call(string.Format("表格：{0}中bool类型转换失败，请检查第{1}行第{2}列数据", tableNames[0],i + 2, j));
-                                return new JArray();
-                            }
-                            row.Add(dataTable.Columns[j].ColumnName, boolStr);
                             break;
                         default:
                             call(string.Format("表格：{0}遇到无法转换的类型：{1}", tableNames[0], dataTable.Rows[1][dataTable.Columns[j].ColumnName].ToString()));

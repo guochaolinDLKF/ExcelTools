@@ -39,16 +39,24 @@ namespace ExcelTools
             }
             return res;
         }
-        public static bool ToBool(this string str ,out int errcode)
-        { 
-            bool res =false;
-            errcode = 0;
-            if (bool.TryParse(str, out res))
+        public static bool ToBool(this string str,out int res)
+        {
+            if (string.IsNullOrEmpty(str))
             {
-                return res;
+                res = 1;
+                return false;
             }
-            errcode = 1;
-            return res;
+            bool temp = false;
+            bool.TryParse(str, out temp);
+            if (!temp)
+            {
+                if (str.Trim().Equals("1"))
+                {
+                    temp = true;
+                }
+            }
+            res = 0;
+            return temp;
         }
         public static double ToDouble(this string str)
         {
