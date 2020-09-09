@@ -32,7 +32,7 @@ namespace ExcelTools
        
         public static float ToFloat(this string str)
         {
-            float res = 0.0f;
+            float res = -1f;
             if (float.TryParse(str, out res))
             {
                 return res;
@@ -60,7 +60,7 @@ namespace ExcelTools
         }
         public static double ToDouble(this string str)
         {
-            double res = 0.0f;
+            double res = -1.0f;
             if (double.TryParse(str, out res))
             {
                 return res;

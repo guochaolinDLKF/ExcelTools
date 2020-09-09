@@ -172,7 +172,7 @@ namespace ExcelTools
                             break;
                         case "float":
                             flo = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToLower().ToFloat();
-                            if (flo != 0.0f)
+                            if (flo != -1.0f)
                                 row.Add(dataTable.Columns[j].ColumnName, flo);
                             else
                             {
@@ -182,7 +182,7 @@ namespace ExcelTools
                             break;
                         case "double":
                             doub = dataTable.Rows[i][dataTable.Columns[j].ColumnName].ToString().ToDouble();
-                            if (doub != 0.0f)
+                            if (doub != -1.0f)
                                 row.Add(dataTable.Columns[j].ColumnName, doub);
                             else
                             {
